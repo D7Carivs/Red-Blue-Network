@@ -13,6 +13,8 @@ Nmap scan results for each machine reveal the below services and OS details:
 ```bash
 $ nmap -sP 192.168.1.1-255
 $ nmap -sV 192.168.110
+$ wpscan --url http://192.168.1.110/wordpress -eu
+
   
 ```
 
