@@ -6,17 +6,22 @@
 - Exploitation
 
 ### Exposed Services
-_TODO: Fill out the information below._
+
 
 Nmap scan results for each machine reveal the below services and OS details:
 
-```bash
-$ nmap -sP 192.168.1.1-255
-$ nmap -sV 192.168.110
-$ wpscan --url http://192.168.1.110/wordpress -eu
+    **$nmap -sP 192.168.1.1-255**: This namp scan scans the full 192.168.1.1 network for any live hosts available. It revealed to hosts up: 192.168.1.110 and 192.168.1.115.
+
+    https://github.com/D7Carivs/Red-Blue-Network/blob/8d270379a8e0adfe76fd3abdc87911b389e9f9b5/Offensivereport/screenshots/Kali%20nMap%20scan%20of%20network.PNG
+  
+    **$nmap -sV 192.168.110**: This scan was then ran to reveal any open ports on the IP address. Port 80 is left open and vulnerable. 
+    
+    Offensivereport/screenshots/nmap scan report for 192.168.1.110.PNG
+
+   **$wpscan --url http://192.168.1.110/wordpress -eu**
 
   
-```
+
 
 This scan identifies the services below as potential points of entry:
 - Target 1
