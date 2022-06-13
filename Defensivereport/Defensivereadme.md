@@ -8,27 +8,35 @@
 - Suggestions for Going Further
 
 ### Network Topology
-_TODO: Fill out the information below._
 
 The following machines were identified on the network:
-- Name of VM 1
-  - **Operating System**:
-  - **Purpose**:
-  - **IP Address**:
-- Name of VM 2
-  - **Operating System**:
-  - **Purpose**:
-  - **IP Address**:
-- Etc.
+- VM 1: Hyper V Host 
+  - **Operating System**: Windows 10
+  - **Purpose**: Contains the vulnerable and attacking machines
+  - **IP Address**: 192.168.1.1
+- VM 2: Kali
+  - **Operating System**: Linux 5.4.0
+  - **Purpose**: Attacking machine
+  - **IP Address**: 192.168.1.90
+- VM 3: ELK
+  - **Operating System**: Linux
+  - **Purpose**: Used for monitoring network and sending Metricbeat, Filebeats, and Packetbeats to Kibana.
+  - **IP Address**: 192.168.1.100    
+- VM 4: Target 1
+  - **Operating System**: Linux
+  - **Purpose**: Vm with vulnerable server
+  - **IP Address**: 192.168.1.110   
+- VM 5: Target 2
+  - **Operating System**: Linux
+  - **Purpose**: VM with vulnerable server
+  - **IP Address**: 192.168.1.115 
 
+  
 ### Description of Targets
 
 The target of this attack was: `Target 1` 192.168.1.110.
 
 Target 1 is an Apache web server and has SSH enabled, so ports 80 and 22 are possible ports of entry for attackers. As such, the following alerts have been implemented:
-  - Excessive HTTP errors
-  - Http Request Size Monitor
-  - CPU Usage Monitor 
 
 ### Monitoring the Targets
 
@@ -37,42 +45,45 @@ Traffic to these services should be carefully monitored. To this end, we have im
   - HTTP Request Size Monitor
   - CPU Usage Monitor
 
-#### Name of Alert 1
-_TODO: Replace `Alert 1` with the name of the alert._
-
 Excess HTTP errors is implemented as follows:
-  - **Metric**: Grouped over top 5 'http.response.status_code
-  - **Threshold**: above 400 for the last 5 minutes
-  - **Vulnerability Mitigated**: TODO
-  - **Reliability**: TODO: Does this alert generate lots of false positives/false negatives? Rate as low, medium, or high reliability.
-
-#### Name of Alert 2
+  - **Metric**: Packetbeat: http.response.status_code > 400
+  - **Threshold**: grouped http response status codes above 400 every 5 minutes
+    - **When count() Grouped over top 5 'http.response.status_code is above 400 for the last 5 minutes**
+  - **Vulnerability Mitigated**: 
+    - Used for intrusion detection/prevention for attacks
+    - IPS would block and non verified or suspicious IP addresses
+    - Request Users Passwords be changed every 30 days
+    - Filter/block/close port 22
+  - **Reliability**: This alert has medium reliablility and will not generate a lot of false positives when looking for brute force attacks. 
+   
  HTTP Request Size Monitor is implemented as follows:
-  - **Metric**: http.request.bytes OVER all
-  - **Threshold**: IS ABOVE 3500 FOR THE LAST 1 minute
-  - **Vulnerability Mitigated**: TODO
-  - **Reliability**: TODO: Does this alert generate lots of false positives/false negatives? Rate as low, medium, or high reliability.
+  - **Metric**: Packetbeat: http.request.bytes
+  - **Threshold**: The sum of the requested bytes is over 3500 in 1 minute
+    - **When sum() of http.request.bytes OVER all documents IS ABOVE 3500 FOR THE LAST 1 minute**
+  - **Vulnerability Mitigated**: f http request size is controlled through a filter, protection would be enabled to detect/prevent DdOS attack for IPS/IDS.
+  - **Reliability**: This Alert has medium reliability. It does not generate a lot of false positives. A DdOS attack generates several request submissions within seconds not minutes. 
 
-#### Name of Alert 3
 CPU Usage Monitor is implemented as follows:
-  - **Metric**: WHEN max OF system.process.total.pct Over all documents
-  - **Threshold**: IS ABOVE .5 FOR THE LAST 5 minutes
-  - **Vulnerability Mitigated**: TODO
-  - **Reliability**: TODO: Does this alert generate lots of false positives/false negatives? Rate as low, medium, or high reliability.
-
-_TODO Note: Explain at least 3 alerts. Add more if time allows._
-
-### Suggestions for Going Further (Optional)
-_TODO_: 
-- Each alert above pertains to a specific vulnerability/exploit. Recall that alerts only detect malicious behavior, but do not stop it. For each vulnerability/exploit identified by the alerts above, suggest a patch. E.g., implementing a blocklist is an effective tactic against brute-force attacks. It is not necessary to explain _how_ to implement each patch.
+  - **Metric**: Metricbeat: system.process.cpu.total.pct
+  - **Threshold**: The max cpu total percent is over .5 in 5 minutes
+    - **When max() OF WHEN max OF system.process.total.pct Over all documents IS ABOVE .5 FOR THE LAST 5 minutes**
+  - **Vulnerability Mitigated**: It is set to control CPU usage at 50%, where it will trigger and alert if the CPU remains at or above 50% for more than 5 minutes continuously. Virus or malware could cause this. 
+  - **Reliability**: This Alert has high reliability. It can cause a lot of false positives due to CPU usage spike on start up when some integrations are initiated.  
 
 The logs and alerts generated during the assessment suggest that this network is susceptible to several active threats, identified by the alerts above. In addition to watching for occurrences of such threats, the network should be hardened against them. The Blue Team suggests that IT implement the fixes below to protect the network:
-- Vulnerability 1
-  - **Patch**: TODO: E.g., _install `special-security-package` with `apt-get`_
-  - **Why It Works**: TODO: E.g., _`special-security-package` scans the system for viruses every day_
-- Vulnerability 2
-  - **Patch**: TODO: E.g., _install `special-security-package` with `apt-get`_
-  - **Why It Works**: TODO: E.g., _`special-security-package` scans the system for viruses every day_
-- Vulnerability 3
-  - **Patch**: TODO: E.g., _install `special-security-package` with `apt-get`_
-  - **Why It Works**: TODO: E.g., _`special-security-package` scans the system for viruses every day_
+- Enumeration and Brute Force Attacks
+  - **Patch**: WordPress Hardening
+    - Lock out accounts after set number of failed login attempts
+    - Disable teh WordPress REST API if not needed. Also configure webserver to block requests to /?author=.
+    - Only allow access to necessary personel to /wp-admin and /wp-login.php
+    - Implement Multifactor authentication 
+  - **Why It Works**:
+    - Inhibit Brute Force attack with account lockout and Multifactor Authentication
+    - WPScan uses REST API to enumerate users
+    - WordPress permalinks can be set to include author and blocking that access will help mitigate Brute Force attacks   
+
+
+
+
+
+
