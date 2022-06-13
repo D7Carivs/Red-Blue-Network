@@ -22,36 +22,41 @@ The following machines were identified on the network:
 - Etc.
 
 ### Description of Targets
-_TODO: Answer the questions below._
 
-The target of this attack was: `Target 1` (TODO: IP Address).
+The target of this attack was: `Target 1` 192.168.1.110.
 
 Target 1 is an Apache web server and has SSH enabled, so ports 80 and 22 are possible ports of entry for attackers. As such, the following alerts have been implemented:
+  - Excessive HTTP errors
+  - Http Request Size Monitor
+  - CPU Usage Monitor 
 
 ### Monitoring the Targets
 
 Traffic to these services should be carefully monitored. To this end, we have implemented the alerts below:
+  - Excessive HTTP errors
+  - HTTP Request Size Monitor
+  - CPU Usage Monitor
 
 #### Name of Alert 1
 _TODO: Replace `Alert 1` with the name of the alert._
 
-Alert 1 is implemented as follows:
-  - **Metric**: TODO
-  - **Threshold**: TODO
+Excess HTTP errors is implemented as follows:
+  - **Metric**: Grouped over top 5 'http.response.status_code
+  - **Threshold**: above 400 for the last 5 minutes
   - **Vulnerability Mitigated**: TODO
   - **Reliability**: TODO: Does this alert generate lots of false positives/false negatives? Rate as low, medium, or high reliability.
 
 #### Name of Alert 2
-Alert 2 is implemented as follows:
-  - **Metric**: TODO
-  - **Threshold**: TODO
+ HTTP Request Size Monitor is implemented as follows:
+  - **Metric**: http.request.bytes OVER all
+  - **Threshold**: IS ABOVE 3500 FOR THE LAST 1 minute
   - **Vulnerability Mitigated**: TODO
   - **Reliability**: TODO: Does this alert generate lots of false positives/false negatives? Rate as low, medium, or high reliability.
 
 #### Name of Alert 3
-Alert 3 is implemented as follows:
-  - **Metric**: TODO
-  - **Threshold**: TODO
+CPU Usage Monitor is implemented as follows:
+  - **Metric**: WHEN max OF system.process.total.pct Over all documents
+  - **Threshold**: IS ABOVE .5 FOR THE LAST 5 minutes
   - **Vulnerability Mitigated**: TODO
   - **Reliability**: TODO: Does this alert generate lots of false positives/false negatives? Rate as low, medium, or high reliability.
 
