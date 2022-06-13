@@ -74,7 +74,7 @@ The logs and alerts generated during the assessment suggest that this network is
 - Enumeration and Brute Force Attacks
   - **Patch**: WordPress Hardening
     - Lock out accounts after set number of failed login attempts
-    - Disable teh WordPress REST API if not needed. Also configure webserver to block requests to /?author=.
+    - Disable the WordPress REST API if not needed. Also configure webserver to block requests to /?author=.
     - Only allow access to necessary personel to /wp-admin and /wp-login.php
     - Implement Multifactor authentication 
   - **Why It Works**:
