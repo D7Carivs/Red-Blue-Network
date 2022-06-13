@@ -10,26 +10,26 @@
 
 Nmap scan results for each machine reveal the below services and OS details:
 
-    $nmap -sP 192.168.1.1-255: This namp scan scans the full 192.168.1.1 network for any live hosts available. It revealed to hosts up: 192.168.1.110 and 192.168.1.115.
+   - $nmap -sP 192.168.1.1-255: This namp scan scans the full 192.168.1.1 network for any live hosts available. It revealed to hosts up: 192.168.1.110 and 192.168.1.115.
 
-    https://github.com/D7Carivs/Red-Blue-Network/blob/8d270379a8e0adfe76fd3abdc87911b389e9f9b5/Offensivereport/screenshots/Kali%20nMap%20scan%20of%20network.PNG
+    - https://github.com/D7Carivs/Red-Blue-Network/blob/8d270379a8e0adfe76fd3abdc87911b389e9f9b5/Offensivereport/screenshots/Kali%20nMap%20scan%20of%20network.PNG
   
-    $nmap -sV 192.168.110: This scan was then ran to reveal any open ports and running services. Port 80 and 22 were left open and vulnerable. These ports were exploited in the attack. 
+   - $nmap -sV 192.168.110: This scan was then ran to reveal any open ports and running services. Port 80 and 22 were left open and vulnerable. These ports were exploited in the attack. 
     
-    https://github.com/D7Carivs/Red-Blue-Network/blob/512c4f050f9bb360678b287645b18518528c6a6e/Offensivereport/screenshots/nmap%20192.168.1.110%20ports%20open.PNG
+     - https://github.com/D7Carivs/Red-Blue-Network/blob/512c4f050f9bb360678b287645b18518528c6a6e/Offensivereport/screenshots/nmap%20192.168.1.110%20ports%20open.PNG
 
-    https://github.com/D7Carivs/Red-Blue-Network/blob/512c4f050f9bb360678b287645b18518528c6a6e/Offensivereport/screenshots/nmap%20scan%20report%20for%20192.168.1.110.PNG
+     - https://github.com/D7Carivs/Red-Blue-Network/blob/512c4f050f9bb360678b287645b18518528c6a6e/Offensivereport/screenshots/nmap%20scan%20report%20for%20192.168.1.110.PNG
 
 
-    $wpscan --url http://192.168.1.110/wordpress -eu: This scan was then used to find users and vulnerabilities on the host. Users Steven and Michael were found with Brute force attack vulnerability. These two usernames could be used to access root on the host system. 
+   - $wpscan --url http://192.168.1.110/wordpress -eu: This scan was then used to find users and vulnerabilities on the host. Users Steven and Michael were found with Brute force attack vulnerability. These two usernames could be used to access root on the host system. 
 
-     https://github.com/D7Carivs/Red-Blue-Network/blob/622ca8e810773ae1f79aeb06bf73be2f99b5bc4b/Offensivereport/screenshots/wpscan%20usernames.PNG
+     -  https://github.com/D7Carivs/Red-Blue-Network/blob/622ca8e810773ae1f79aeb06bf73be2f99b5bc4b/Offensivereport/screenshots/wpscan%20usernames.PNG
 
-    Port 22 was then used to ssh into 192.168.1.110 as Michael after using hydra to crack his password. He used his name (michael) as his password. 
+   - Port 22 was then used to ssh into 192.168.1.110 as Michael after using hydra to crack his password. He used his name (michael) as his password. 
 
-    https://github.com/D7Carivs/Red-Blue-Network/blob/d08f9c86548a37b0983556be6dd0689e8111a3a1/Offensivereport/screenshots/hydra%20michael%20password.PNG
+     - https://github.com/D7Carivs/Red-Blue-Network/blob/d08f9c86548a37b0983556be6dd0689e8111a3a1/Offensivereport/screenshots/hydra%20michael%20password.PNG
 
-    https://github.com/D7Carivs/Red-Blue-Network/blob/c2e216333f3123128eaa7c49d06bbebdd8bfda6b/Offensivereport/screenshots/ssh%20michael@192.168.1.110%20password%20michael.PNG
+     - https://github.com/D7Carivs/Red-Blue-Network/blob/c2e216333f3123128eaa7c49d06bbebdd8bfda6b/Offensivereport/screenshots/ssh%20michael@192.168.1.110%20password%20michael.PNG
 
 - **The following vulnerabilities were found during the exploitation:**
 
